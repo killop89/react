@@ -616,3 +616,23 @@ jobs:
         with:
           name: sizebot-message
           path: sizebot-message.md
+
+
+  build_and_run_docker:
+    name: Build and Run Docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image
+        run: |
+          docker build -t my-image-name .
+
+      - name: Run Docker container
+        run: |
+          docker run --rm my-image-name
+
