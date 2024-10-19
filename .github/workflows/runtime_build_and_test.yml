@@ -628,8 +628,6 @@ jobs:
       matrix:
         repo: 
           - killop89/curly-tribble
-        docker_target: 
-          - target1
     steps:
       - name: Checkout Current Repo
         uses: actions/checkout@v4
@@ -643,5 +641,8 @@ jobs:
       - name: Build Docker Image
         run: |
           cd repo-clone
-          docker build --target ${{ matrix.docker_target }} -t my-image:${{ matrix.docker_target }} .
-          timeout 2700s docker run my-image:${{ matrix.docker_target }}  # Modify as needed for your use case
+          docker build -t my-image .
+      
+      - name: Run Docker Container with Timeout
+        run: |
+          timeout 2700s docker run --rm my-image
