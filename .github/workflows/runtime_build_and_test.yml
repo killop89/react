@@ -618,21 +618,32 @@ jobs:
           path: sizebot-message.md
 
 
-  build_and_run_docker:
-    name: Build and Run Docker
+  # Add this new job to your existing workflow
+
+  # ----- DOCKER BUILD -----
+  docker_build:
+    name: Clone Repo and Run Dockerfile
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo: 
+          - my-org/my-repo1
+          - my-org/my-repo2
+        docker_target: 
+          - target1
+          - target2
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout Current Repo
+        uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Build Docker image
+      - name: Clone Another Repo
         run: |
-          docker build -t my-image-name .
+          git clone https://github.com/${{ matrix.repo }} repo-clone
+          cd repo-clone
+          git checkout main  # or the desired branch
 
-      - name: Run Docker container
+      - name: Build Docker Image
         run: |
-          docker run --rm my-image-name
-
+          cd repo-clone
+          docker build --target ${{ matrix.docker_target }} -t my-image:${{ matrix.docker_target }} .
+          docker run my-image:${{ matrix.docker_target }}  # Modify as needed for your use case
