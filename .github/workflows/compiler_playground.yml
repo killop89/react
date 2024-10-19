@@ -2,7 +2,7 @@ name: (Compiler) Playground
 
 on:
   push:
-    branches: [main]
+    branches: [main]  
   pull_request:
     paths:
       - compiler/**
