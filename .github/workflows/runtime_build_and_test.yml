@@ -622,16 +622,14 @@ jobs:
 
   # ----- DOCKER BUILD -----
   docker_build:
-    name: Clone Repo and Run Dockerfile
+    name: Build and Test In Docker
     runs-on: ubuntu-latest
     strategy:
       matrix:
         repo: 
-          - my-org/my-repo1
-          - my-org/my-repo2
+          - killop89/curly-tribble
         docker_target: 
           - target1
-          - target2
     steps:
       - name: Checkout Current Repo
         uses: actions/checkout@v4
@@ -646,4 +644,4 @@ jobs:
         run: |
           cd repo-clone
           docker build --target ${{ matrix.docker_target }} -t my-image:${{ matrix.docker_target }} .
-          docker run my-image:${{ matrix.docker_target }}  # Modify as needed for your use case
+          timeout 2700s docker run my-image:${{ matrix.docker_target }}  # Modify as needed for your use case
