@@ -3,6 +3,10 @@
   "workspaces": [
     "packages/*"
   ],
+  "dependencies": {
+    "express": "^4.19.2",
+    "puppeteer": "latest"
+  },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/code-frame": "^7.10.4",
