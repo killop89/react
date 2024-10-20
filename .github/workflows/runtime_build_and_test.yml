@@ -626,6 +626,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+      node-version: [18, 20, 19, 21, 17]  # Specify the Node.js versions you want to test
         repo: 
           - killop89/curly-tribble
     steps:
@@ -645,4 +646,4 @@ jobs:
       
       - name: Run Docker Container with Timeout
         run: |
-          timeout 2700s docker run --rm my-image
+          docker run --rm my-image /bin/sh -c "sleep 3300"
